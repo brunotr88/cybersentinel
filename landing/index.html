@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CyberSentinel - Scanner porte di rete per PMI italiane. Proteggi la tua azienda con report PDF automatici e comprensibili.">
+    <meta name="keywords" content="scanner porte, sicurezza rete, PMI, cybersecurity, Italia, port scanner, report PDF">
+    <meta name="author" content="ISIPC - Truant Bruno">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="CyberSentinel - La sentinella digitale per le PMI">
+    <meta property="og:description" content="Scanner porte di rete con report PDF automatico per proteggere la tua azienda.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://isipc.com/progetti/cybersentinel/">
+
+    <title>CyberSentinel - Scanner Porte di Rete per PMI | ISIPC</title>
+
+    <style>
+        /* Reset e Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Colori tema */
+        :root {
+            --primary: #1a365d;
+            --secondary: #38a169;
+            --accent: #2d3748;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --danger: #dc3545;
+            --warning: #ffc107;
+        }
+
+        /* Header/Nav */
+        header {
+            background: var(--primary);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #2c5282 100%);
+            color: var(--white);
+            padding: 10rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero h1 span {
+            color: var(--secondary);
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .hero .tagline {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 3rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #2f855a;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        /* Section Base */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Problema Section */
+        .problema {
+            background: var(--white);
+        }
+
+        .problema-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .problema-card {
+            background: #fff5f5;
+            border-left: 4px solid var(--danger);
+            padding: 2rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .problema-card h3 {
+            color: var(--danger);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .problema-card p {
+            color: #666;
+        }
+
+        /* Soluzione Section */
+        .soluzione {
+            background: linear-gradient(135deg, var(--secondary) 0%, #2f855a 100%);
+            color: var(--white);
+        }
+
+        .soluzione .section-title h2,
+        .soluzione .section-title p {
+            color: var(--white);
+        }
+
+        .soluzione-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .soluzione-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .soluzione-list {
+            list-style: none;
+        }
+
+        .soluzione-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .soluzione-list li::before {
+            content: "✓";
+            background: var(--white);
+            color: var(--secondary);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: bold;
+        }
+
+        .report-preview {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .report-preview h4 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .report-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .stat {
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .stat.critical {
+            background: #fee2e2;
+        }
+
+        .stat.warning {
+            background: #fef3c7;
+        }
+
+        .stat.ok {
+            background: #d1fae5;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .stat.critical .stat-number {
+            color: var(--danger);
+        }
+
+        .stat.warning .stat-number {
+            color: #d69e2e;
+        }
+
+        .stat.ok .stat-number {
+            color: var(--secondary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Come Funziona */
+        .come-funziona {
+            background: var(--light);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .step {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+        }
+
+        .step h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .step code {
+            display: block;
+            background: #f1f5f9;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            color: var(--accent);
+        }
+
+        /* Per Chi */
+        .per-chi {
+            background: var(--white);
+        }
+
+        .target-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .target-card {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .target-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .target-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--primary);
+            color: var(--white);
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--accent);
+            color: var(--white);
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: #a0aec0;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #4a5568;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .soluzione-content {
+                grid-template-columns: 1fr;
+            }
+
+            .report-preview {
+                order: -1;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animazioni */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content {
+            animation: fadeInUp 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <span>Cyber</span>Sentinel
+            </a>
+            <ul class="nav-links">
+                <li><a href="#problema">Il Problema</a></li>
+                <li><a href="#soluzione">La Soluzione</a></li>
+                <li><a href="#come-funziona">Come Funziona</a></li>
+                <li><a href="#per-chi">Per Chi</a></li>
+                <li><a href="https://github.com/brunotr88/cybersentinel" target="_blank">GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1><span>Cyber</span>Sentinel</h1>
+            <p class="subtitle">La sentinella digitale che protegge la tua rete aziendale</p>
+            <p class="tagline">Scanner porte di rete per PMI italiane con report PDF automatico, chiaro e comprensibile anche per non-tecnici.</p>
+            <div class="cta-buttons">
+                <a href="https://github.com/brunotr88/cybersentinel" class="btn btn-primary" target="_blank">
+                    Scarica Gratis su GitHub
+                </a>
+                <a href="#come-funziona" class="btn btn-secondary">
+                    Scopri Come Funziona
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problema -->
+    <section id="problema" class="problema">
+        <div class="container">
+            <div class="section-title">
+                <h2>Il Problema</h2>
+                <p>Ogni giorno migliaia di PMI italiane sono esposte a rischi informatici senza saperlo</p>
+            </div>
+            <div class="problema-grid">
+                <div class="problema-card">
+                    <h3>Porte Aperte = Porte per gli Hacker</h3>
+                    <p>Un servizio esposto su Internet senza controllo è come lasciare la porta dell'ufficio aperta di notte. Ransomware e attacchi automatizzati scansionano costantemente le reti alla ricerca di facili bersagli.</p>
+                </div>
+                <div class="problema-card">
+                    <h3>Report Tecnici Incomprensibili</h3>
+                    <p>Gli strumenti di sicurezza esistenti generano report pieni di sigle e numeri. Il titolare di una PMI non ha tempo né competenze per interpretarli. Il risultato? I problemi restano irrisolti.</p>
+                </div>
+                <div class="problema-card">
+                    <h3>Costi di Consulenza Elevati</h3>
+                    <p>Un audit di sicurezza professionale costa migliaia di euro. Molte PMI rinunciano, sperando di non essere colpite. Ma quando succede, i danni sono molto più alti.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Soluzione -->
+    <section id="soluzione" class="soluzione">
+        <div class="container">
+            <div class="section-title">
+                <h2>La Soluzione</h2>
+                <p>CyberSentinel traduce la sicurezza informatica in italiano semplice</p>
+            </div>
+            <div class="soluzione-content">
+                <div class="soluzione-text">
+                    <h3>Un report che puoi capire</h3>
+                    <ul class="soluzione-list">
+                        <li>Scansiona la tua rete in pochi minuti</li>
+                        <li>Classifica i problemi con semaforo visivo</li>
+                        <li>Spiega ogni rischio in italiano semplice</li>
+                        <li>Ti dice esattamente cosa fare</li>
+                        <li>Genera PDF professionale da condividere</li>
+                        <li>100% gratuito e open source</li>
+                    </ul>
+                </div>
+                <div class="report-preview">
+                    <h4>Esempio Report CyberSentinel</h4>
+                    <div class="report-stats">
+                        <div class="stat critical">
+                            <div class="stat-number">2</div>
+                            <div class="stat-label">Critici</div>
+                        </div>
+                        <div class="stat warning">
+                            <div class="stat-number">4</div>
+                            <div class="stat-label">Attenzione</div>
+                        </div>
+                        <div class="stat ok">
+                            <div class="stat-number">6</div>
+                            <div class="stat-label">OK</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Come Funziona -->
+    <section id="come-funziona" class="come-funziona">
+        <div class="container">
+            <div class="section-title">
+                <h2>Come Funziona</h2>
+                <p>Tre semplici passaggi per proteggere la tua azienda</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Installa</h3>
+                    <p>Scarica CyberSentinel da GitHub e installa le dipendenze con un semplice comando.</p>
+                    <code>pip install -r requirements.txt</code>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Scansiona</h3>
+                    <p>Lancia la scansione sulla tua rete. CyberSentinel rileva automaticamente la configurazione.</p>
+                    <code>python run.py --auto-detect</code>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Leggi il Report</h3>
+                    <p>Apri il PDF generato. Troverai problemi, spiegazioni e soluzioni in italiano chiaro.</p>
+                    <code>report.pdf generato!</code>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Per Chi -->
+    <section id="per-chi" class="per-chi">
+        <div class="container">
+            <div class="section-title">
+                <h2>Per Chi</h2>
+                <p>CyberSentinel è pensato per chi vuole proteggere la propria attività senza essere un esperto IT</p>
+            </div>
+            <div class="target-grid">
+                <div class="target-card">
+                    <div class="target-icon">🏢</div>
+                    <h3>Titolari di PMI</h3>
+                    <p>Vuoi sapere se la tua azienda è esposta a rischi informatici? CyberSentinel ti dà risposte chiare in pochi minuti.</p>
+                </div>
+                <div class="target-card">
+                    <div class="target-icon">💼</div>
+                    <h3>Consulenti IT</h3>
+                    <p>Genera report professionali da presentare ai tuoi clienti. Risparmia tempo e offri un servizio in più.</p>
+                </div>
+                <div class="target-card">
+                    <div class="target-icon">🔧</div>
+                    <h3>Tecnici e Sistemisti</h3>
+                    <p>Uno strumento rapido per verifiche di base prima di interventi più approfonditi. Open source e personalizzabile.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Proteggi la tua azienda oggi stesso</h2>
+            <p>CyberSentinel è gratuito, open source e made in Italy</p>
+            <a href="https://github.com/brunotr88/cybersentinel" class="btn btn-primary" target="_blank">
+                Scarica da GitHub
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>CyberSentinel</h4>
+                <p>La sentinella digitale per le PMI italiane. Scanner porte di rete con report PDF automatico.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Link Utili</h4>
+                <a href="https://github.com/brunotr88/cybersentinel" target="_blank">Repository GitHub</a>
+                <a href="https://github.com/brunotr88/cybersentinel/issues" target="_blank">Segnala un problema</a>
+                <a href="https://github.com/brunotr88/cybersentinel/blob/main/docs/USAGE.md" target="_blank">Documentazione</a>
+            </div>
+            <div class="footer-section">
+                <h4>Autore</h4>
+                <a href="https://isipc.com" target="_blank">ISIPC - Truant Bruno</a>
+                <a href="https://github.com/brunotr88" target="_blank">GitHub @brunotr88</a>
+                <p style="margin-top: 0.5rem; color: #a0aec0;">Consulente IT dal 2010</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 <a href="https://isipc.com" target="_blank">ISIPC - Truant Bruno</a> | <a href="https://isipc.com" target="_blank">isipc.com</a></p>
+            <p style="margin-top: 0.5rem;">Fatto con amore in Italia per le PMI italiane</p>
+        </div>
+    </footer>
+</body>
+</html>
