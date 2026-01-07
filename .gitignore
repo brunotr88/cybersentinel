@@ -102,3 +102,7 @@ output/
 *.xml
 *.nmap
 *.gnmap
+
+# Cartelle locali (non pubbliche)
+social/
+landing/
