@@ -1,0 +1,18 @@
+# CyberSentinel - Dipendenze
+# Sviluppato da ISIPC - Truant Bruno | https://isipc.com
+
+# Generazione PDF
+reportlab>=4.0.0
+
+# Colori terminale (opzionale)
+colorama>=0.4.6
+
+# Progress bar (opzionale)
+tqdm>=4.65.0
+
+# Configurazione YAML (opzionale)
+pyyaml>=6.0
+
+# Per development/testing
+pytest>=7.4.0
+pytest-cov>=4.1.0

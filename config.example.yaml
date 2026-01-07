@@ -1,0 +1,49 @@
+# CyberSentinel - Configurazione
+# Copia questo file in config.yaml e personalizza
+# Sviluppato da ISIPC - Truant Bruno | https://isipc.com
+
+# Impostazioni scanner
+scanner:
+  # Timeout connessione in secondi
+  timeout: 2.0
+
+  # Usa nmap se disponibile (più accurato)
+  use_nmap: true
+
+  # Porte da scansionare (lascia vuoto per default)
+  # ports: [21, 22, 23, 25, 53, 80, 110, 135, 139, 143, 443, 445, 993, 995, 1433, 3306, 3389, 5432, 5900, 8080]
+
+# Impostazioni report
+report:
+  # Lingua report (it = italiano)
+  language: it
+
+  # Includi raccomandazioni dettagliate
+  detailed_recommendations: true
+
+  # Logo aziendale (percorso file PNG/JPG)
+  # company_logo: /path/to/logo.png
+
+# Notifiche (opzionale)
+notifications:
+  # Email
+  email:
+    enabled: false
+    smtp_server: smtp.example.com
+    smtp_port: 587
+    username: user@example.com
+    # password: da variabile ambiente CYBERSENTINEL_SMTP_PASSWORD
+    recipient: admin@example.com
+
+  # Webhook (per integrazioni)
+  webhook:
+    enabled: false
+    url: https://hooks.example.com/cybersentinel
+
+# Logging
+logging:
+  # Livello: DEBUG, INFO, WARNING, ERROR
+  level: INFO
+
+  # Salva log su file
+  file: cybersentinel.log
